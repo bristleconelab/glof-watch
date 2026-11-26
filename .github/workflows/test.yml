@@ -17,3 +17,7 @@ jobs:
           python-version: "3.12"
       - name: Privacy guard
         run: python tests/test_privacy.py
+      - name: Monitor rules (no network)
+        run: |
+          pip install -r requirements.txt pytest
+          python -m pytest tests/test_monitor.py -q

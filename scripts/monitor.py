@@ -79,8 +79,9 @@ def main():
              "|---|---|---|---|---|---|---|---|---|---|"]
     for r in results:
         ch = "–" if r["change_pct"] is None else f"{r['change_pct']:+.0f} %"
-        lines.append(f"| {r['name']} | {r['country']} | {r['type']} | {ICON[r['status']]} | {r['recent_km2'] or '–'} | "
-                     f"{r['baseline_km2'] or '–'} | {ch} | {r['clear_scenes']} | {r['last_scene'] or '–'} | [map]({r['map']}) |")
+        km = ["–" if r[k] is None else r[k] for k in ("recent_km2", "baseline_km2")]   # 0.0 = empty lake, not missing
+        lines.append(f"| {r['name']} | {r['country']} | {r['type']} | {ICON[r['status']]} | {km[0]} | "
+                     f"{km[1]} | {ch} | {r['clear_scenes']} | {r['last_scene'] or '–'} | [map]({r['map']}) |")
     open(os.path.join(a.out, f"{'STATUS' if not a.as_of else tag}.md"), "w").write("\n".join(lines) + "\n")
     print("->", os.path.join(a.out, tag))
 
